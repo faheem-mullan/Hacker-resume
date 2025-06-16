@@ -47,7 +47,30 @@ function App() {
         <h2>Resume Preview</h2>
         <h3>{name || 'Your Name'}</h3>
         <p><strong>{job || 'Your Job Title'}</strong></p>
-        <p>Skills: {skills || 'Add some skills'}</p>
+        <div>
+  <strong>Skills:</strong>
+  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '8px' }}>
+  {skills
+  .split(',')
+  .map((skill, idx) => skill.trim()) // trim whitespace
+  .filter((skill) => skill.length > 0) // remove empty entries
+  .map((skill, idx) => (
+    <span
+      key={idx}
+      style={{
+        backgroundColor: '#333',
+        padding: '4px 8px',
+        borderRadius: '4px',
+        fontSize: '0.9rem',
+      }}
+    >
+      {skill}
+    </span>
+))}
+
+  </div>
+</div>
+
         <p>{summary || 'Write a short summary about yourself...'}</p>
       </div>
     </div>
