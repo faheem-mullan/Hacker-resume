@@ -9,13 +9,13 @@ function App() {
   const [skills, setSkills] = useState('');
   const [summary, setSummary] = useState('');
   const [education, setEducation] = useState([{ school: '', degree: '', year: '' }]);
+  const [darkMode, setDarkMode] = useState(false);
 
   const handleDownloadPDF = () => {
     const preview = document.getElementById('resume-preview');
     const downloadBtn = document.getElementById('download-btn');
     const resumeTitle = document.getElementById('resume-title');
 
- 
     downloadBtn.style.display = 'none';
     if (resumeTitle) resumeTitle.style.display = 'none';
 
@@ -45,10 +45,18 @@ function App() {
   };
 
   return (
-    <div className="resume-container">
+    <div className={`resume-container ${darkMode ? 'dark' : ''}`}>
+      {/* Theme Toggle */}
+      <div style={{ position: 'absolute', top: '10px', right: '20px' }}>
+        <button onClick={() => setDarkMode(!darkMode)} style={{ padding: '6px 14px', cursor: 'pointer' }}>
+          Toggle {darkMode ? 'Light' : 'Dark'} Mode
+        </button>
+      </div>
+
       {/* Form Section */}
       <div className="form-section">
         <h2>Resume Form</h2>
+
         <input type="text" placeholder="Your Name" value={name} onChange={(e) => setName(e.target.value)} />
         <input type="text" placeholder="Job Title" value={job} onChange={(e) => setJob(e.target.value)} />
         <textarea placeholder="Skills (comma separated)" value={skills} onChange={(e) => setSkills(e.target.value)} rows={3} />
@@ -89,11 +97,7 @@ function App() {
             />
           </div>
         ))}
-        <button
-          onClick={() =>
-            setEducation([...education, { school: '', degree: '', year: '' }])
-          }
-        >
+        <button onClick={() => setEducation([...education, { school: '', degree: '', year: '' }])}>
           Add More Education
         </button>
 
@@ -137,7 +141,7 @@ function App() {
 
           <p>{summary || 'Write a short summary about yourself...'}</p>
 
-          <div className="resume-section">
+          <div className="section-card resume-section">
             <h3>Education</h3>
             {education.map((edu, index) => (
               <p key={index}>
