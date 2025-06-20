@@ -8,14 +8,14 @@ function App() {
   const [job, setJob] = useState('');
   const [skills, setSkills] = useState('');
   const [summary, setSummary] = useState('');
+  const [education, setEducation] = useState([{ school: '', degree: '', year: '' }]);
 
   const handleDownloadPDF = () => {
     const preview = document.getElementById('resume-preview');
-
     const downloadBtn = document.getElementById('download-btn');
     const resumeTitle = document.getElementById('resume-title');
 
-    // Hide elements not for PDF
+ 
     downloadBtn.style.display = 'none';
     if (resumeTitle) resumeTitle.style.display = 'none';
 
@@ -39,7 +39,6 @@ function App() {
       pdf.addImage(imgData, 'PNG', marginX, marginY, imgScaledWidth, imgScaledHeight);
       pdf.save(`${name.trim().replaceAll(' ', '_')}_Resume.pdf`);
 
-      // Restore elements
       downloadBtn.style.display = 'block';
       if (resumeTitle) resumeTitle.style.display = 'block';
     });
@@ -50,30 +49,53 @@ function App() {
       {/* Form Section */}
       <div className="form-section">
         <h2>Resume Form</h2>
-        <input
-          type="text"
-          placeholder="Your Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Job Title"
-          value={job}
-          onChange={(e) => setJob(e.target.value)}
-        />
-        <textarea
-          placeholder="Skills (comma separated)"
-          value={skills}
-          onChange={(e) => setSkills(e.target.value)}
-          rows={3}
-        />
-        <textarea
-          placeholder="Professional Summary"
-          value={summary}
-          onChange={(e) => setSummary(e.target.value)}
-          rows={4}
-        />
+        <input type="text" placeholder="Your Name" value={name} onChange={(e) => setName(e.target.value)} />
+        <input type="text" placeholder="Job Title" value={job} onChange={(e) => setJob(e.target.value)} />
+        <textarea placeholder="Skills (comma separated)" value={skills} onChange={(e) => setSkills(e.target.value)} rows={3} />
+        <textarea placeholder="Professional Summary" value={summary} onChange={(e) => setSummary(e.target.value)} rows={4} />
+
+        <h3>Education</h3>
+        {education.map((edu, index) => (
+          <div key={index}>
+            <input
+              type="text"
+              placeholder="School/University"
+              value={edu.school}
+              onChange={(e) => {
+                const updated = [...education];
+                updated[index].school = e.target.value;
+                setEducation(updated);
+              }}
+            />
+            <input
+              type="text"
+              placeholder="Degree"
+              value={edu.degree}
+              onChange={(e) => {
+                const updated = [...education];
+                updated[index].degree = e.target.value;
+                setEducation(updated);
+              }}
+            />
+            <input
+              type="text"
+              placeholder="Year"
+              value={edu.year}
+              onChange={(e) => {
+                const updated = [...education];
+                updated[index].year = e.target.value;
+                setEducation(updated);
+              }}
+            />
+          </div>
+        ))}
+        <button
+          onClick={() =>
+            setEducation([...education, { school: '', degree: '', year: '' }])
+          }
+        >
+          Add More Education
+        </button>
 
         <button
           id="download-btn"
@@ -114,6 +136,15 @@ function App() {
           </div>
 
           <p>{summary || 'Write a short summary about yourself...'}</p>
+
+          <div className="resume-section">
+            <h3>Education</h3>
+            {education.map((edu, index) => (
+              <p key={index}>
+                <strong>{edu.degree || 'Degree'}</strong> at {edu.school || 'School'} ({edu.year || 'Year'})
+              </p>
+            ))}
+          </div>
         </div>
       </div>
     </div>
