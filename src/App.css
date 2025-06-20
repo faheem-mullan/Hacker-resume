@@ -137,7 +137,7 @@ input, textarea {
 }
 
 .resume-container {
-  gap: 30px; /* Add this if you're using flex */
+  gap: 30px;
 }
 
 .preview-section h3 {
