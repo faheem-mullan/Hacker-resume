@@ -10,6 +10,16 @@ function App() {
   const [summary, setSummary] = useState('');
   const [education, setEducation] = useState([{ school: '', degree: '', year: '' }]);
   const [darkMode, setDarkMode] = useState(false);
+  const [profileImage, setProfileImage] = useState(null);
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => setProfileImage(reader.result);
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleDownloadPDF = () => {
     const preview = document.getElementById('resume-preview');
@@ -19,7 +29,10 @@ function App() {
     downloadBtn.style.display = 'none';
     if (resumeTitle) resumeTitle.style.display = 'none';
 
-    html2canvas(preview, { scale: 2 }).then((canvas) => {
+    html2canvas(preview, {
+      scale: 2,
+      useCORS: true,
+    }).then((canvas) => {
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF('p', 'mm', 'a4');
 
@@ -59,6 +72,7 @@ function App() {
 
         <input type="text" placeholder="Your Name" value={name} onChange={(e) => setName(e.target.value)} />
         <input type="text" placeholder="Job Title" value={job} onChange={(e) => setJob(e.target.value)} />
+        <input type="file" accept="image/*" onChange={handleImageUpload} />
         <textarea placeholder="Skills (comma separated)" value={skills} onChange={(e) => setSkills(e.target.value)} rows={3} />
         <textarea placeholder="Professional Summary" value={summary} onChange={(e) => setSummary(e.target.value)} rows={4} />
 
@@ -101,10 +115,7 @@ function App() {
           Add More Education
         </button>
 
-        <button
-          id="download-btn"
-          onClick={handleDownloadPDF}
-        >
+        <button id="download-btn" onClick={handleDownloadPDF}>
           Download PDF
         </button>
       </div>
@@ -113,6 +124,10 @@ function App() {
       <div id="resume-preview" className="preview-section">
         <div style={{ maxWidth: '100%', height: '100%' }}>
           <h2 id="resume-title" style={{ marginTop: 0 }}>Resume Preview</h2>
+
+          {profileImage && (
+            <img src={profileImage} alt="Profile" className="profile-image" />
+          )}
 
           <h3>{name || 'Your Name'}</h3>
           <p><strong>{job || 'Your Job Title'}</strong></p>
