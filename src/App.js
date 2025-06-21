@@ -104,15 +104,6 @@ function App() {
         <button
           id="download-btn"
           onClick={handleDownloadPDF}
-          style={{
-            marginTop: '20px',
-            padding: '10px 20px',
-            backgroundColor: '#444',
-            color: '#fff',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
-          }}
         >
           Download PDF
         </button>
