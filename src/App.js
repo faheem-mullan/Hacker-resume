@@ -11,6 +11,9 @@ function App() {
   const [education, setEducation] = useState([{ school: '', degree: '', year: '' }]);
   const [darkMode, setDarkMode] = useState(false);
   const [profileImage, setProfileImage] = useState(null);
+  const [experience, setExperience] = useState([
+  { company: '', title: '', year: '', description: '' }
+]);
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
@@ -118,47 +121,108 @@ function App() {
         <button id="download-btn" onClick={handleDownloadPDF}>
           Download PDF
         </button>
+        <h3>Work Experience</h3>
+{experience.map((exp, index) => (
+  <div key={index}>
+    <input
+      type="text"
+      placeholder="Company"
+      value={exp.company}
+      onChange={(e) => {
+        const updated = [...experience];
+        updated[index].company = e.target.value;
+        setExperience(updated);
+      }}
+    />
+    <input
+      type="text"
+      placeholder="Job Title"
+      value={exp.title}
+      onChange={(e) => {
+        const updated = [...experience];
+        updated[index].title = e.target.value;
+        setExperience(updated);
+      }}
+    />
+    <input
+      type="text"
+      placeholder="Year (e.g. 2022 - 2024)"
+      value={exp.year}
+      onChange={(e) => {
+        const updated = [...experience];
+        updated[index].year = e.target.value;
+        setExperience(updated);
+      }}
+    />
+    <textarea
+      placeholder="Brief Description"
+      value={exp.description}
+      onChange={(e) => {
+        const updated = [...experience];
+        updated[index].description = e.target.value;
+        setExperience(updated);
+      }}
+    />
+  </div>
+))}
+<button onClick={() => setExperience([...experience, { company: '', title: '', year: '', description: '' }])}>
+  Add More Experience
+</button>
+
       </div>
 
       {/* Preview Section */}
-      <div id="resume-preview" className="preview-section">
-        <div style={{ maxWidth: '100%', height: '100%' }}>
-          <h2 id="resume-title" style={{ marginTop: 0 }}>Resume Preview</h2>
+{/* Preview Section */}
+<div id="resume-preview" className="preview-section">
+  <div style={{ maxWidth: '100%', height: '100%' }}>
+    <h2 id="resume-title" style={{ marginTop: 0 }}>Resume Preview</h2>
 
-          {profileImage && (
-            <img src={profileImage} alt="Profile" className="profile-image" />
-          )}
+    {profileImage && (
+      <img src={profileImage} alt="Profile" className="profile-image" />
+    )}
 
-          <h3>{name || 'Your Name'}</h3>
-          <p><strong>{job || 'Your Job Title'}</strong></p>
+    <h3>{name || 'Your Name'}</h3>
+    <p><strong>{job || 'Your Job Title'}</strong></p>
 
-          <div>
-            <strong>Skills:</strong>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '8px' }}>
-              {skills
-                .split(',')
-                .map((skill) => skill.trim())
-                .filter((skill) => skill.length > 0)
-                .map((skill, idx) => (
-                  <span key={idx} className="skill-badge">{skill}</span>
-                ))}
-            </div>
-          </div>
-
-          <p>{summary || 'Write a short summary about yourself...'}</p>
-
-          <div className="section-card resume-section">
-            <h3>Education</h3>
-            {education.map((edu, index) => (
-              <p key={index}>
-                <strong>{edu.degree || 'Degree'}</strong> at {edu.school || 'School'} ({edu.year || 'Year'})
-              </p>
-            ))}
-          </div>
-        </div>
+    <div>
+      <strong>Skills:</strong>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '8px' }}>
+        {skills
+          .split(',')
+          .map((skill) => skill.trim())
+          .filter((skill) => skill.length > 0)
+          .map((skill, idx) => (
+            <span key={idx} className="skill-badge">{skill}</span>
+          ))}
       </div>
     </div>
+
+    <p>{summary || 'Write a short summary about yourself...'}</p>
+
+    {/* Education Section */}
+    <div className="section-card resume-section">
+      <h3>Education</h3>
+      {education.map((edu, index) => (
+        <p key={index}>
+          <strong>{edu.degree || 'Degree'}</strong> at {edu.school || 'School'} ({edu.year || 'Year'})
+        </p>
+      ))}
+    </div>
+          {/* Work Experience Section */}
+      <div className="section-card resume-section">
+        <h3>Work Experience</h3>
+        {experience.map((exp, index) => (
+          <div key={index} style={{ marginBottom: '12px' }}>
+            <strong>{exp.title || 'Job Title'}</strong> at {exp.company || 'Company'} ({exp.year || 'Year'})
+            <p>{exp.description || 'Work description here...'}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>   
   );
 }
 
 export default App;
+
