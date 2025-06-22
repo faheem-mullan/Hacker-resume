@@ -310,4 +310,12 @@ input[type="file"] {
 .dark .preview-section {
   background: #2c2c2e;
 }
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+h2, h3 {
+  font-weight: 600;
+  margin-bottom: 12px;
+}
 
