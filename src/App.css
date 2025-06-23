@@ -318,4 +318,25 @@ h2, h3 {
   font-weight: 600;
   margin-bottom: 12px;
 }
+/* Forcing light theme during export */
+.light-mode-export {
+  background: #ffffff !important;
+  color: #000000 !important;
+}
+
+.light-mode-export * {
+  background: none !important;
+  color: #000000 !important;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+.light-mode-export,
+.light-mode-export * {
+  color: #000 !important;
+  font-weight: 600 !important;
+  background: transparent !important;
+  border-color: #000 !important;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
 
