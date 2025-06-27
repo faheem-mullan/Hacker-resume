@@ -63,7 +63,6 @@ function App() {
     }).then((canvas) => {
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF('p', 'mm', 'a4');
-
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = pdf.internal.pageSize.getHeight();
       const imgWidth = canvas.width;
@@ -182,6 +181,13 @@ function App() {
           <h3>{name || 'Your Name'}</h3>
           <p><strong>{job || 'Your Job Title'}</strong></p>
 
+          <div style={{ marginBottom: '12px' }}>
+            <p>Email: {contact.email}</p>
+            <p>Phone: {contact.phone}</p>
+            <p>LinkedIn: {contact.linkedin}</p>
+            <p>GitHub: {contact.github}</p>
+          </div>
+
           <div>
             <strong>Skills:</strong>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '8px' }}>
@@ -192,13 +198,6 @@ function App() {
           </div>
 
           <p>{summary || 'Write a short summary about yourself...'}</p>
-
-          <div style={{ marginBottom: '12px' }}>
-            <p>Email: {contact.email}</p>
-            <p>Phone: {contact.phone}</p>
-            <p>LinkedIn: {contact.linkedin}</p>
-            <p>GitHub: {contact.github}</p>
-          </div>
 
           <div className="section-card resume-section">
             <h3>Education</h3>

@@ -340,3 +340,23 @@ h2, h3 {
   print-color-adjust: exact !important;
 }
 
+.profile-image {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin: 10px auto;
+  display: block;
+  border: 2px solid #ccc;
+}
+.skill-badge {
+  background-color: #e0e0e0;
+  color: #333;
+  padding: 4px 10px;
+  border-radius: 15px;
+  font-size: 14px;
+}
+.dark .skill-badge {
+  background-color: #444;
+  color: #f0f0f0;
+}
